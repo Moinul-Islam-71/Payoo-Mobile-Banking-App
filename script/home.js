@@ -5,6 +5,7 @@
 
 const logout_alert_container           = document.getElementById(`logout_alert_container`);
 const balanceEl           = document.getElementById(`userBalance`);
+balanceEl.innerText       = localStorage.getItem("balance") || "50"
 const userBalance         = parseInt( balanceEl.innerText );
 
 const card_add_money      = document.getElementById(`add_money`);
@@ -14,7 +15,38 @@ const card_get_bonus      = document.getElementById(`get_bonus`);
 const card_pay_bill       = document.getElementById(`paybill`);
 const card_transactions   = document.getElementById(`transactions`);
 
+
+
+// Coupon Database
+const coupons = {
+    "EID2026"  : 500,
+    "RAMADAN"  : 300,
+    "PAYOO100" : 100,
+};
+
+
+
 const transactionData = JSON.parse(localStorage.getItem("transactionData") || "[]");
+
+
+
+
+
+// Card And Its Parent mapping
+const cardMap = [
+    { card: card_add_money,      parent: `add_money_parent`          },
+    { card: card_cash_out,       parent: `cash_out_parent`           },
+    { card: card_transfer_money, parent: `transfer_money_parent`     },
+    { card: card_get_bonus,      parent: `get_bonus_parent`          },
+    { card: card_pay_bill,       parent: `paybill_parent`            },
+    { card: card_transactions,   parent: `transaction_history_parent`},
+];
+
+const parentIds = cardMap.map( item => item.parent );
+
+
+
+
 
 // .........................................................................................
 
@@ -82,17 +114,7 @@ function showToast(message, type = "error", time = 3000) {
 // FEATURE TOGGLING LOGIC STARTS
 // .........................................................................................
 
-// Card And Its Parent mapping
-const cardMap = [
-    { card: card_add_money,      parent: `add_money_parent`          },
-    { card: card_cash_out,       parent: `cash_out_parent`           },
-    { card: card_transfer_money, parent: `transfer_money_parent`     },
-    { card: card_get_bonus,      parent: `get_bonus_parent`          },
-    { card: card_pay_bill,       parent: `paybill_parent`            },
-    { card: card_transactions,   parent: `transaction_history_parent`},
-];
 
-const parentIds = cardMap.map( item => item.parent );
 
 // reset_screen with forEach
 function reset_screen() {
@@ -258,6 +280,17 @@ btn_logout.addEventListener("click",
     }
 )
 
+document.addEventListener("click",
+    (e) => {
+        if(
+            !logout_alert_container.contains(e.target) && 
+            !btn_logout.contains(e.target)
+        ) {
+            logout_alert_container.classList = "hidden fixed bottom-5 inset-x-0 mx-auto z-50 w-max max-w-[90vw]"
+        }
+    }
+) 
+
 
 btn_add_money.addEventListener( "click",
     (e) => {
@@ -277,6 +310,7 @@ btn_add_money.addEventListener( "click",
         if( pin !== '1234' ) { notify (e, "Invalid PIN!"); return; }
 
         balanceEl.innerText =  parseInt( balanceEl.innerText ) + add_amount;
+        localStorage.setItem("balance", balanceEl.innerText)
 
         transactionData.push(data);
 
@@ -307,6 +341,7 @@ btn_cashout.addEventListener( "click",
         
         
         balanceEl.innerText =  parseInt( balanceEl.innerText ) - cashout_amount;
+        localStorage.setItem("balance", balanceEl.innerText)
         
         transactionData.push(data)
 
@@ -341,6 +376,7 @@ btn_send_money.addEventListener( "click",
         if( transfer_add_pin !== '1234' ) { notify( e, "Invalid PIN!" ); return; }
         
         balanceEl.innerText =  parseInt( balanceEl.innerText ) - transfer_add_amount;
+        localStorage.setItem("balance", balanceEl.innerText)
         
         transactionData.push(data);
 
@@ -352,12 +388,6 @@ btn_send_money.addEventListener( "click",
 
 
 
-// Coupon Database
-const coupons = {
-    "EID2026"  : 500,
-    "RAMADAN"  : 300,
-    "PAYOO100" : 100,
-};
 
 
 
@@ -370,6 +400,7 @@ btn_get_bonus.addEventListener("click", (e) => {
     if ( typeof result === "string") { notify( e, result ); return; }
     
     balanceEl.innerText = parseInt( balanceEl.innerText ) + result;
+    localStorage.setItem("balance", balanceEl.innerText)
     
     const data   =   { type: e.target.dataset.type, time: new Date().toLocaleString(), amount: result }
     
@@ -400,6 +431,7 @@ btn_paybill.addEventListener( "click",
         if( paybill_add_pin !== '1234' ) { notify (e, "Invalid PIN!"); return; }
         
         balanceEl.innerText =  parseInt( balanceEl.innerText ) - paybill_amount;
+        localStorage.setItem("balance", balanceEl.innerText)
         
         transactionData.push(data)
         
@@ -435,7 +467,7 @@ card_transactions.addEventListener( "click",
                             </div>
                             <div>
                                 <h3 class="text-lg font-bold text-gray-800"> 
-                                     ${item.type === "Payment" ? item.bill + " - " + item.type : item.type}
+                                     ${item.type === "Payment" ? item.bill + " - " + item.type + " " + item.amount + "tk" : item.type + " " + item.amount + "tk"}
                                 </h3>
                                 <p class="text-sm text-gray-400">${item.time}</p>
                             </div>

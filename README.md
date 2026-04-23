@@ -66,7 +66,7 @@ Just open index.html in any browser — no server needed!
 
 Login credentials (demo)
 
-Mobile : 01879895127
+Mobile : 01811111111
 PIN    : 1234
 
 🔮 Future Plans
