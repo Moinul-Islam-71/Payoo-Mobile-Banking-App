@@ -220,21 +220,21 @@ function notify(e, message, type = "error") {
 function validateAddMoney(bank, account_number, add_amount) {
     if ( bank === "" || bank === "Select a Bank" ) return "Please Select a Bank!";
     if ( account_number.length !== 11 ) return "Invalid Account Number (Must be 11 digits)";
-    if ( isNaN(add_amount) || add_amount < 0 ) return "Enter a valid amount";
+    if ( isNaN(add_amount) || add_amount <= 0 ) return "Enter a valid amount";
     return null;
 }
 
 
 function validateCashout( Agent_number, cashout_amount, cashout_add_pin ) {
     if ( Agent_number.length !== 11 ) return "Invalid Agent Number (Must be 11 digits)";
-    if ( isNaN(cashout_amount) || cashout_amount < 0 ) return "Enter a valid amount";
+    if ( isNaN(cashout_amount) || cashout_amount <= 0 ) return "Enter a valid amount";
     if ( cashout_amount > parseInt( balanceEl.innerText ) ) return "Insufficient Balance!";
     return null;
 }
 
 function validateTransfer_Money( user_account_number, transfer_add_amount ) {
     if ( user_account_number.length !== 11 ) return "Invalid User Number (Must be 11 digits)";
-    if (isNaN(transfer_add_amount) || transfer_add_amount < 0) return "Enter a valid amount";
+    if (isNaN(transfer_add_amount) || transfer_add_amount <= 0) return "Enter a valid amount";
     if (transfer_add_amount > parseInt( balanceEl.innerText )) return "Insufficient Balance!";
     return null;
 }
@@ -248,7 +248,7 @@ function validateGetBonus(coupon) {
 function validatePayment( bill_selector, biller_account_number, paybill_amount ) {
     if ( bill_selector === "" || bill_selector === "Select" ) return "Select Payment Option!";
     if ( biller_account_number.length !== 11 ) return "Invalid Biller Account Number (Must be 11 digits)";
-    if ( isNaN(paybill_amount) || paybill_amount < 0 ) return "Enter a valid amount";
+    if ( isNaN(paybill_amount) || paybill_amount <= 0 ) return "Enter a valid amount";
     if ( paybill_amount > parseInt( balanceEl.innerText ) ) return "Insufficient Balance!";
     return null;
 }
