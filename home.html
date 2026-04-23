@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./dist/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#f6f0f7] flex flex-col min-h-screen max-w-full">
+
+    <div id="alert-container" class="fixed top-5 z-51 mx-auto">
+
+    </div>
+
+    <div id="logout_alert_container" class="hidden fixed bottom-5 inset-x-0 mx-auto z-50 w-max max-w-[90vw]">
+
+
+
+        <div role="alert" class="alert alert-vertical sm:alert-horizontal">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="stroke-info h-6 w-6 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Logout For Sure?</span>
+            <div>
+                <button id="btn_logout_cancel" class="btn btn-sm">Cancel</button>
+                <button id="btn_logout_ok" class="btn btn-sm btn-primary">OK</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    <nav class="sticky bg-[#f6f0f7] top-0 z-50 py-4 px-4 md:px-10 border-gray-300 border-b">
+
+        <div class="flex justify-between items-center max-w-6xl mx-auto">
+
+
+            <div class="flex gap-2 sm:gap-10">
+
+                <!-- image container -->
+
+                <div class="flex justify-center items-center gap-2 shrink-0 md:">
+                    <img src="./assets/logo/logo_payoo_bird_logo.png" alt="Payoo">
+                    <p class="text-lg md:text-2xl text-violet-950 font-bold hidden md:block">Pay<span
+                            class="text-blue-400">oo</span>
+                    </p>
+                </div>
+
+
+                <!-- Balance show container -->
+
+                <div class="text-black font-semibold flex flex-col">
+
+                    <div class="w-full text-base md:text-xl bg-violet-500 mx-auto px-3 md:px-6 py-1 rounded-3xl">
+                        $<span id="userBalance" class="px-1 tracking-wide">300000</span>
+                    </div>
+                    <div>Balance</div>
+                </div>
+
+            </div>
+
+
+
+            <!-- logout Btn -->
+
+            <button id="btn_logout" class="btn bg-white text-gray-400 border-[#e5e5e5]">
+                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0"
+                    viewBox="0 0 512.016 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                    <g>
+                        <path
+                            d="M496 240.008H293.332c-8.832 0-16-7.168-16-16s7.168-16 16-16H496c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"
+                            fill="#99A1AF" opacity="1" data-original="#99A1AF" class=""></path>
+                        <path
+                            d="M416 320.008a15.89 15.89 0 0 1-11.309-4.692c-6.25-6.253-6.25-16.386 0-22.636l68.696-68.692-68.696-68.695c-6.25-6.25-6.25-16.383 0-22.633 6.254-6.254 16.387-6.254 22.637 0l80 80c6.25 6.25 6.25 16.383 0 22.633l-80 80A15.896 15.896 0 0 1 416 320.008zM170.668 512.008c-4.566 0-8.898-.64-13.227-1.985L29.055 467.25C11.585 461.148 0 444.871 0 426.676v-384C0 19.145 19.137.008 42.668.008c4.562 0 8.895.64 13.227 1.984l128.382 42.774c17.473 6.101 29.055 22.379 29.055 40.574v384c0 23.531-19.133 42.668-42.664 42.668zm-128-480c-5.867 0-10.668 4.8-10.668 10.668v384c0 4.543 3.05 8.765 7.402 10.281l127.785 42.582c.918.297 2.114.469 3.481.469 5.867 0 10.664-4.801 10.664-10.668v-384c0-4.543-3.05-8.766-7.402-10.281L46.145 32.477c-.918-.297-2.114-.47-3.477-.47zm0 0"
+                            fill="#99A1AF" opacity="1" data-original="#99A1AF" class=""></path>
+                        <path
+                            d="M325.332 170.676c-8.832 0-16-7.168-16-16v-96c0-14.7-11.965-26.668-26.664-26.668h-240c-8.832 0-16-7.168-16-16s7.168-16 16-16h240c32.363 0 58.664 26.305 58.664 58.668v96c0 8.832-7.168 16-16 16zM282.668 448.008h-85.336c-8.832 0-16-7.168-16-16s7.168-16 16-16h85.336c14.7 0 26.664-11.969 26.664-26.668v-96c0-8.832 7.168-16 16-16s16 7.168 16 16v96c0 32.363-26.3 58.668-58.664 58.668zm0 0"
+                            fill="#99A1AF" opacity="1" data-original="#99A1AF" class=""></path>
+                    </g>
+                </svg>
+                <span class="hidden md:block">Log Out</span>
+            </button>
+
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="flex flex-col items-center w-full">
+
+
+
+        <div class="w-full mx-auto flex flex-col items-center bg-[#e0d9eb] rounded-b-4xl">
+
+
+
+
+            <div class="pt-10 py-4 px-4 md:px-10 w-full max-w-6xl">
+
+
+                <div class="welcome-section flex flex-col gap-4 text-left">
+
+                    <h2 class="text-violet-950 font-bold text-5xl md:text-3xl">
+                        Welcome to <span class="text-5xl md:text-3xl text-violet-950 font-bold">Pay<span
+                                class="text-blue-400">oo</span></span>
+                    </h2>
+
+                    <p class="text-violet-950 font-semibold">Enjoy easy and convenient financial services with us.
+                        Cashout
+                        charge is low and </p>
+
+                </div>
+
+
+                <div
+                    class="card-section py-4 px-2 md:px-10 w-full grid grid-cols-3 gap-2 md:gap-10 justify-items-center">
+
+                    <div id="add_money" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+                            <img class="w-8 h-8 md:w-20 md:h-20" src="./assets/cards/add_money.svg" alt="Add Money" />
+
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Add Money</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                    <div id="cash_out" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <!-- content -->
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+
+                            <img class=" w-8 h-8 md:w-20 md:h-20" src="./assets/cards/send.svg" alt="3D card" />
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Cashout</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+
+                    <div id="transfer_money" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <!-- content -->
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+
+                            <img class=" w-8 h-8 md:w-20 md:h-20" src="./assets/cards/transfer_money.svg"
+                                alt="3D card" />
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Transfer Money</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+
+                    <div id="get_bonus" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <!-- content -->
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+
+                            <img class=" w-8 h-8 md:w-20 md:h-20" src="./assets/cards/financial.svg" alt="3D card" />
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Get Bonus</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+
+                    <div id="paybill" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <!-- content -->
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+
+                            <img class=" w-8 h-8 md:w-20 md:h-20" src="./assets/cards/paybill.svg" alt="3D card" />
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Pay Bill</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+
+                    <div id="transactions" class="hover-3d w-full max-w-[110px] md:max-w-none">
+                        <!-- content -->
+                        <figure
+                            class="p-2 md:p-5 w-full md:w-60 bg-violet-700/30 border-violet-500/20 border-2 rounded-xl md:rounded-2xl flex flex-col items-center gap-2 md:gap-4 aspect-square justify-center">
+
+                            <img class=" w-8 h-8 md:w-20 md:h-20" src="./assets/cards/transactions.svg" alt="3D card" />
+                            <p class="text-violet-600 text-[10px] md:text-sm text-center font-semibold leading-tight">
+                                Transactions</p>
+                        </figure>
+                        <!-- 8 empty divs needed for the 3D effect -->
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+        <!-- Add Money Form -->
+
+        <div class="mt-10 mb-5 py-4 px-4 md:px-10 flex flex-col justify-start w-full max-w-6xl">
+
+
+            <div id="add_money_parent" class="hidden">
+
+
+                <h1 class="text-2xl md:text-4xl text-[#2a1831] font-semibold capitalize text-left mb-10">Add Money</h1>
+
+                <div class="form-container flex flex-col gap-5">
+
+                    <div>
+                        <h2 class="text-[#2a1831] font-semibold capitalize mb-3">select a bank</h2>
+
+                        <select id="bank_selector"
+                            class="select appearance-none bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13">
+                            <option disabled selected>Select a Bank</option>
+                            <option>AB Bank</option>
+                            <option>Dutch Bangla Bank</option>
+                            <option>IFIC Bank</option>
+                        </select>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Bank Account Number</label>
+
+                            <input id="bank_account_number" type="text" placeholder="Enter 11 digit account number"
+                                class="bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Amount to Add</label>
+
+                            <input id="add_amount" type="text" placeholder="Add Amount to withdraw"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Pin Number</label>
+
+                            <input id="add_pin" type="text" placeholder="Enter 4 digit pin number"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+                    <button id="btn_add_money" data-reset="add_money_parent" data-type="Add Money"
+                        class="w-full btn btn-block outline-none border-none rounded-3xl mt-8 bg-[#3B25C1]">Add
+                        Money</button>
+
+                </div>
+
+            </div>
+
+
+            <div id="cash_out_parent" class="hidden">
+
+
+                <h1 class="text-2xl md:text-4xl text-[#2a1831] font-semibold capitalize text-left mb-10">Cashout</h1>
+
+                <div class="form-container flex flex-col gap-5">
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Agent Number</label>
+
+                            <input id="agent_number" type="text" placeholder="Enter 11 digit number"
+                                class="bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Amount</label>
+
+                            <input id="cashout_amount" type="text" placeholder="Enter amount to withdraw"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Pin Number</label>
+
+                            <input id="cashout_add_pin" type="text" placeholder="Enter 4 digit pin number"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+                    <button id="btn_cashout" data-reset="cash_out_parent" data-type="Cash Out"
+                        class="w-full btn btn-block outline-none border-none rounded-3xl mt-8 bg-[#3B25C1]">Withdraw
+                        Money</button>
+
+                </div>
+            </div>
+
+
+
+            <div id="transfer_money_parent" class="hidden">
+
+
+                <h1 class="text-2xl md:text-4xl text-[#2a1831] font-semibold capitalize text-left mb-10">Transfer Money
+                </h1>
+
+                <div class="form-container flex flex-col gap-5">
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">User Account Number</label>
+
+                            <input id="user_account_number" type="text" placeholder="Enter 11 digit number"
+                                class="bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Amount</label>
+
+                            <input id="transfer_add_amount" type="text" placeholder="Enter amount to transfer"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Pin Number</label>
+
+                            <input id="transfer_add_pin" type="text" placeholder="Enter 4 digit pin number"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+                    <button id="btn_send_money" data-reset="transfer_money_parent" data-type="Transfer Money"
+                        class="w-full btn btn-block outline-none border-none rounded-3xl mt-8 bg-[#3B25C1]">Send
+                        Now</button>
+
+                </div>
+            </div>
+
+
+
+            <div id="get_bonus_parent" class="hidden">
+
+
+                <h1 class="text-2xl md:text-4xl text-[#2a1831] font-semibold capitalize text-left mb-10">Get Bonus
+                </h1>
+
+                <div class="form-container flex flex-col gap-5">
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Enter Bonus Coupon</label>
+
+                            <input id="add_coupon" type="text" placeholder="Enter your coupon"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+                    <button id="btn_get_bonus" data-reset="get_bonus_parent" data-type="Get Bonus"
+                        class="w-full btn btn-block outline-none border-none rounded-3xl mt-8 bg-[#3B25C1]">Get
+                        Bonus</button>
+
+                </div>
+            </div>
+
+
+            <div id="paybill_parent" class="hidden">
+
+
+                <h1 class="text-2xl md:text-4xl text-[#2a1831] font-semibold capitalize text-left mb-10">Pay Bill</h1>
+
+                <div class="form-container flex flex-col gap-5">
+
+                    <div>
+                        <h2 class="text-[#2a1831] font-semibold capitalize mb-3">select to pay</h2>
+
+                        <select id="bill_selector"
+                            class="select appearance-none bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13">
+                            <option disabled selected>Select</option>
+                            <option>WASA</option>
+                            <option>DPDC </option>
+                            <option>BPDB </option>
+                            <option>DESCO </option>
+                            <option>WZPDCL </option>
+                            <option>Link3 </option>
+                            <option>Amber IT </option>
+                        </select>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Biller Account Number</label>
+
+                            <input id="biller_account_number" type="text" placeholder="Enter account number"
+                                class="bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Amount</label>
+
+                            <input id="paybill_amount" type="text" placeholder="Add Amount to pay"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="" class="text-black font-semibold">Pin Number</label>
+
+                            <input id="paybill_add_pin" type="text" placeholder="Enter 4 digit pin number"
+                                class=" bg-[#ffffff] text-[#2a1831] rounded-3xl outline-none font-semibold capitalize w-full h-13 input" />
+                        </div>
+                    </div>
+
+
+                    <button id="btn_paybill" data-reset="paybill_parent" data-type="Payment"
+                        class="w-full btn btn-block outline-none border-none rounded-3xl mt-8 bg-[#3B25C1]">Pay
+                        Now</button>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="transaction_history_parent" class="hidden">
+
+                <div class="flex justify-between items-center px-1 mb-6">
+                    <h1 class="text-xl md:text-2xl text-[#2a1831] font-bold capitalize">Transaction History</h1>
+                    <button class="text-gray-500 hover:text-violet-700 font-medium transition-colors">View All</button>
+                </div>
+
+                <div id="transaction_container" class="flex flex-col gap-4">
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <script src="./script/home.js"></script>
+</body>
+
+</html>

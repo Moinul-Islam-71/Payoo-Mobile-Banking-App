@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bKash Modern Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .bkash-pink {
+            background-color: #e2136e;
+        }
+        
+        .bkash-text-pink {
+            color: #e2136e;
+        }
+
+        .nav-glass {
+            background: rgba(226, 19, 110, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.25);
+            width: 280px;
+        }
+
+        .service-box {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-box:hover {
+            transform: translateY(-8px);
+            border-color: #e2136e;
+            box-shadow: 0 20px 25px -5px rgba(226, 19, 110, 0.1);
+        }
+
+        .profile-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Balance Animation */
+        #balance-container {
+            transition: all 0.5s ease;
+        }
+
+        .balance-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            to { left: 100%; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Premium Navigation Bar -->
+    <nav class="nav-glass text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
+            
+            <!-- Left: Logo & Balance -->
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-2 cursor-pointer">
+                    <div class="bg-white p-2 rounded-xl shadow-md">
+                        <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 0L40 20L20 40L0 20L20 0Z" fill="#e2136e"/>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-black tracking-tighter hidden sm:block">bKash</span>
+                </div>
+
+                <div class="h-8 w-[1px] bg-white/20 hidden md:block"></div>
+
+                <!-- Balance Widget -->
+                <div id="balance-container" class="cursor-pointer hover:bg-white/10 px-4 py-1.5 rounded-2xl transition-all balance-shine flex items-center space-x-3" onclick="toggleBalance()">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wallet text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] opacity-80 uppercase font-bold leading-none">Available</p>
+                        <p id="balanceLabel" class="text-sm font-bold">ব্যালেন্স দেখুন</p>
+                        <p id="balanceAmount" class="hidden text-base font-black">৳ ৪৫,০০০.০০</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Search, Notifs & Profile -->
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden lg:flex items-center search-box rounded-2xl px-4 py-2 w-48 focus-within:ring-2 ring-white/30">
+                    <i class="fas fa-search text-white/60 text-sm"></i>
+                    <input type="text" placeholder="Search services..." class="bg-transparent border-none outline-none text-sm ml-3 placeholder-white/50 w-full">
+                </div>
+
+                <!-- Action Icons -->
+                <div class="flex items-center space-x-1 md:space-x-4">
+                    <button class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 transition relative">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-yellow-400 rounded-full border-2 border-pink-600"></span>
+                    </button>
+                    
+                    <button class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 transition">
+                        <i class="fas fa-cog text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="flex items-center space-x-3 profile-btn pl-2 pr-4 py-1.5 rounded-2xl cursor-pointer hover:bg-white/20 transition">
+                    <div class="w-8 h-8 bg-white rounded-xl flex items-center justify-center overflow-hidden">
+                        <img src="https://ui-avatars.com/api/?name=Ansar&background=fce7f3&color=e2136e" alt="User" class="w-full h-full object-cover">
+                    </div>
+                    <div class="hidden md:block text-left">
+                        <p class="text-xs font-bold leading-none">Ansar</p>
+                        <p class="text-[10px] opacity-70">Personal</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-[10px] opacity-60 hidden md:block"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        
+        <!-- Hero Section -->
+        <section class="mb-10 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-3">Hello, <span class="bkash-text-pink">Ansar!</span></h1>
+            <p class="text-gray-500 max-w-lg leading-relaxed text-lg">আপনার দিনটি ভালো কাটুক। সহজে ও নিরাপদে লেনদেন করুন bKash Web-এর মাধ্যমে।</p>
+        </section>
+
+        <!-- Service Grid (From Image Layout) -->
+        <section class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+            <!-- Add Money -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-4 text-orange-500 text-3xl">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Add Money</h3>
+            </div>
+
+            <!-- Cashout -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mb-4 text-green-500 text-3xl">
+                    <i class="fas fa-money-bill-transfer"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Cashout</h3>
+            </div>
+
+            <!-- Transfer Money -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-4 text-blue-500 text-3xl">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Transfer Money</h3>
+            </div>
+
+            <!-- Get Bonus -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-yellow-50 rounded-2xl flex items-center justify-center mb-4 text-yellow-600 text-3xl">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Get Bonus</h3>
+            </div>
+
+            <!-- Pay Bill -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center mb-4 text-pink-500 text-3xl">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Pay Bill</h3>
+            </div>
+
+            <!-- Transactions -->
+            <div class="service-box bg-white p-8 rounded-[2rem] border border-gray-100 flex flex-col items-center justify-center text-center cursor-pointer shadow-sm">
+                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4 text-indigo-500 text-3xl">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 text-lg">Transactions</h3>
+            </div>
+        </section>
+
+        <!-- Latest Payments Section -->
+        <section class="max-w-2xl">
+            <div class="flex justify-between items-center mb-6 px-2">
+                <h2 class="text-2xl font-black text-gray-800 tracking-tight">Latest Payment</h2>
+                <a href="#" class="text-pink-600 font-bold text-sm hover:underline">View All</a>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-[1.5rem] flex items-center justify-between shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-orange-400">
+                            <i class="fas fa-bolt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-lg">Electricity Bill</h4>
+                            <p class="text-sm text-gray-400">Today 01:44 AM</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-300"></i>
+                </div>
+
+                <div class="bg-white p-5 rounded-[1.5rem] flex items-center justify-between shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-blue-500">
+                            <i class="fas fa-university text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-lg">Bank Deposit</h4>
+                            <p class="text-sm text-gray-400">Today 01:44 AM</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-300"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let showing = false;
+        function toggleBalance() {
+            const label = document.getElementById('balanceLabel');
+            const amount = document.getElementById('balanceAmount');
+            if(!showing) {
+                label.classList.add('hidden');
+                amount.classList.remove('hidden');
+                showing = true;
+                setTimeout(() => {
+                    label.classList.remove('hidden');
+                    amount.classList.add('hidden');
+                    showing = false;
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
