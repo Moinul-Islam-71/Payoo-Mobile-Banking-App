@@ -3,17 +3,18 @@
 // .........................................................................................
 
 
-const logout_alert_container           = document.getElementById(`logout_alert_container`);
-const balanceEl           = document.getElementById(`userBalance`);
-balanceEl.innerText       = localStorage.getItem("balance") || "50"
-const userBalance         = parseInt( balanceEl.innerText );
+const logout_alert_container     = document.getElementById(`logout_alert_container`);
+const balanceEl                  = document.getElementById(`userBalance`);
+balanceEl.innerText              = localStorage.getItem("balance") || "50"
+const userBalance                = parseInt( balanceEl.innerText );
 
-const card_add_money      = document.getElementById(`add_money`);
-const card_cash_out       = document.getElementById(`cash_out`);
-const card_transfer_money = document.getElementById(`transfer_money`);
-const card_get_bonus      = document.getElementById(`get_bonus`);
-const card_pay_bill       = document.getElementById(`paybill`);
-const card_transactions   = document.getElementById(`transactions`);
+const card_add_money             = document.getElementById(`add_money`);
+const card_cash_out              = document.getElementById(`cash_out`);
+const card_transfer_money        = document.getElementById(`transfer_money`);
+const card_get_bonus             = document.getElementById(`get_bonus`);
+const card_pay_bill              = document.getElementById(`paybill`);
+const card_transactions          = document.getElementById(`transactions`);
+const latest_payment_container   = document.getElementById(`latest_payment_container`);
 
 
 
@@ -40,11 +41,54 @@ const cardMap = [
     { card: card_get_bonus,      parent: `get_bonus_parent`          },
     { card: card_pay_bill,       parent: `paybill_parent`            },
     { card: card_transactions,   parent: `transaction_history_parent`},
+    { card: latest_payment_container,   parent: `latest_payment_parent`},
 ];
 
 const parentIds = cardMap.map( item => item.parent );
 
 
+// reset_screen with forEach
+function reset_screen() {
+    parentIds.forEach( id => document.getElementById(id).classList = "hidden" );
+}
+
+const latest_payment_array = [...transactionData].reverse();
+
+latest_payment_array.map( item => {
+            console.log(item.type, item.time, item.amount)
+
+
+            const transactionCardView = document.createElement("div");
+
+            transactionCardView.innerHTML = `
+                <div
+                        class="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all cursor-pointer group">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-gray-50 rounded-full flex justify-center items-center group-hover:bg-violet-50 transition-colors">
+                                <img src="./assets/cards/transactions.svg" class="w-6 h-6" alt="icon">
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800"> 
+                                     ${item.type === "Payment" ? item.bill + " - " + item.type + " " + item.amount + "tk" : item.type + " " + item.amount + "tk"}
+                                </h3>
+                                <p class="text-sm text-gray-400">${item.time}</p>
+                            </div>
+                        </div>
+
+                        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="text-gray-400" viewBox="0 0 16 16">
+                                <path
+                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                            </svg>
+                        </button>
+                        
+                    </div>
+            `
+
+            latest_payment_container.appendChild(transactionCardView);
+        } )
 
 
 
@@ -116,10 +160,7 @@ function showToast(message, type = "error", time = 3000) {
 
 
 
-// reset_screen with forEach
-function reset_screen() {
-    parentIds.forEach( id => document.getElementById(id).classList = "hidden" );
-}
+
 
 // Feature toggling with one loop!
 cardMap.forEach(({ card, parent }) => {
